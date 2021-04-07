@@ -4,10 +4,14 @@ app.component("player", {
   `<div class="player" v-bind:style="playerColor">
     <div class="settings" @click="showColorPicker=!showColorPicker">&bull;&bull;&bull;</div>
     <div class="colorpicker" v-show="showColorPicker">
-      <p v-for="color in colors"
-        v-bind:style="{color: color}"
-        @click="setColor(color)"
-      >&bull;</p>
+      <div style="width:400px;">
+        <span 
+          class="colorCircle"
+          v-for="color in colors"
+          v-bind:style="{backgroundColor: color}"
+          @click="setColor(color)"
+        ></span>
+      </div>
     </div>
     <div class="lifecontrols">
       <p class="minus" @click="life--">-</p>
@@ -27,7 +31,7 @@ app.component("player", {
     setColor(color){
       console.log(color);
       this.showColorPicker = false;
-      this.playerColor = {"background-color": color};
+      this.playerColor = {backgroundColor: color};
     }
   },
 });
