@@ -1,0 +1,82 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <style>
+      :root {
+        --mtg-red: #faaa8f;
+        --mtg-blue: #a9e0f9;
+        --mtg-white: #fffcd7;
+        --mtg-black: #cdc1c1;
+        --mtg-green: #9bd3ae;
+      }
+      body {
+        margin:0;
+        font-family: sans-serif;
+      }
+      #app {
+        display:flex;
+        flex-direction:column;
+        height:100%;
+        background-color:black;
+      }
+      .player {
+        background-color:var(--mtg-blue);
+        flex-grow:1;
+        display:flex;
+        align-items:center;
+        max-height: 50%;
+      }
+      .player:first-of-type {
+        background-color:var(--mtg-red);
+        transform:rotate(180deg);
+      }
+      .lifecontrols{
+        display:flex;
+        justify-content:space-evenly;
+        align-items:center;
+        flex-grow: 1;
+      }
+      .player p {
+        margin:0;
+      }
+      .life {
+        font-size:300px;
+      }
+      .minus, .plus {
+        font-size: 300px;
+        user-select: none;
+        cursor:pointer;
+      }
+      .settings {
+        position: relative;
+        bottom: 40%;
+        right: -80%;
+        font-size: 100px;
+        width: 0;
+      }
+      .colorpicker {
+        position: relative;
+        bottom: 40%;
+        right: -5%;
+        font-size: 400px;
+        width: 0;
+      }
+      .colorpicker p {
+        -webkit-text-stroke: 10px black;
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <player></player>
+      <player></player>
+    </div>
+    <script src="main.js"></script>
+    <script src="player.js"></script>
+    <script>
+      const mountedApp = app.mount("#app");
+    </script>
+  </body>
+</html>
