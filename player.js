@@ -4,7 +4,7 @@ app.component("player", {
   `<div class="player" v-bind:style="playerColor">
     <div class="settings" @click="showColorPicker=!showColorPicker">&bull;&bull;&bull;</div>
     <div class="colorpicker" v-show="showColorPicker">
-      <div style="width:250px;">
+      <div style="width:275px;">
         <span 
           class="colorCircle"
           v-for="color in colors"
