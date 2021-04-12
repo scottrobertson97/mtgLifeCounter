@@ -7,8 +7,8 @@
   </head>
   <body>
     <div id="app">
-      <player></player>
-      <player></player>
+      <!--<div class="globalSettings"></div>-->
+      <player v-for="i in playerCount" :player-count="playerCount" :index="i"></player>
     </div>
     <script src="main.js?v=1"></script>
     <script src="player.js?v=1"></script>

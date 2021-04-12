@@ -16,30 +16,28 @@
 body {
 	margin:0;
 	font-family: sans-serif;
+	overflow: hidden;
 }
 #app {
 	display:flex;
-	flex-direction:column;
 	height:100%;
-	background-color:black;
+	flex-wrap: wrap;
 }
 .player {
-	background-color:var(--mtg-blue);
-	flex-grow:1;
 	display:flex;
 	flex-direction:column;
-	max-height: 50%;
 }
-.player:first-of-type {
-	background-color:var(--mtg-red);
-	transform:rotate(180deg);
+
+.playerContent{	
+  display: flex;
+  flex-direction: column;
 }
 .lifecontrols{
 	display:flex;
 	justify-content:space-evenly;
 	align-items:center;
 	flex-grow: 1;
-	padding-bottom: 50px;
+	padding-bottom: 30px;
 }
 .controls{
 	display: flex;
@@ -50,25 +48,52 @@ body {
 .player p {
 	margin:0;
 }
-.life {
+.player.half .life{
 	font-size:150px;
+}
+.player.half .lifeIncrement{
+	font-size:50px;
+}
+.player.half .minus, .player.half .plus{
+	font-size:100px;
+}
+.player.half .lifeIncrement{
+	bottom: 30px;
+	right: 60px;
+}
+.player.quarter .life{
+	font-size:75px;
+}
+.player.quarter .lifeIncrement{
+	font-size:25px;
+}
+.player.quarter .minus, .player.quarter .plus{
+	font-size:50px;
+}
+.player.quarter .lifeIncrement{
+	bottom: 15px;
+	right: 30px;
 }
 .lifeIncrement{
 	position: relative;
-	width: 0;
-	bottom: 30px;
-	right: 60px;
+	width: 0;	
 	float: right;
-	font-size: 50px;
 }
 .minus, .plus {
-	font-size: 100px;
-	cursor:pointer;
+	cursor: pointer;
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.minus p, .plus p{
+	margin: 0;
+  text-align: center;
+  width: 100%;
 }
 .settings {
-	font-size: 50px;
+	font-size:45px;
 	padding-right: 20px;
-	/* width: 0; */
 }
 .colorpicker {
 	display: flex;
@@ -86,4 +111,12 @@ body {
 	border-color: black;
 	border-width: 5px;
 	border-style: solid;
+}
+.globalSettings{
+	position: absolute;
+	background-color: magenta;
+	width: 50px;
+	height: 50px;
+	top:50%;
+	right: 50%;
 }

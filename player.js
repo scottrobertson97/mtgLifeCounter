@@ -1,37 +1,42 @@
 app.component("player", {
+  props: {
+    playerCount: Number,
+    index: Number
+  },
   template:
   /*html*/
-  `<div class="player" v-bind:style="playerColor">
-    <div class="controls">      
-      <div class="colorpicker" v-show="showColorPicker">
-        <span 
-          class="colorCircle"
-          v-for="color in colors"
-          v-bind:style="{backgroundColor: color}"
-          @click="setColor(color)"
-        ></span>
+  `<div class="player" v-bind:style="[playerColor, playerSizing]" :class="{half:isHalf, quarter:!isHalf}">
+    <div class="playerContent" v-bind:style="playerContentSizingAndRotation">
+      <div class="controls">      
+        <div class="colorpicker" v-show="showColorPicker">
+          <span 
+            class="colorCircle"
+            v-for="color in colors"
+            v-bind:style="{backgroundColor: color}"
+            @click="setColor(color)"
+          ></span>
+        </div>
+        <div v-show="!showColorPicker" style="flex-grow:1;"></div>
+        <div class="settings" 
+          @click="showColorPicker=!showColorPicker"
+          ><span v-if="showColorPicker" style="margin-right:10px;">X</span>
+          <span v-else>&bull;&bull;&bull;</span>
+        </div>
       </div>
-      <div v-show="!showColorPicker" style="flex-grow:1;"></div>
-      <div class="settings" 
-        @click="showColorPicker=!showColorPicker"
-        ><span v-if="showColorPicker" style="margin-right:10px;">X</span>
-        <span v-else>&bull;&bull;&bull;</span>
+      <div class="lifecontrols">
+        <div class="minus" @click="incrementLife(-1)"><p>-</p></div>
+        <div class="lifeCounter">        
+          <p class="lifeIncrement"
+            v-show="showLifeIncrementAmount"
+            >{{lifeIncrementAmount > 0 ? '+'+lifeIncrementAmount:lifeIncrementAmount}}
+          </p>
+          <p class="life">{{life}}</p>
+        </div>        
+        <div class="plus" @click="incrementLife(1)"><p>+</p></div>
       </div>
-    </div>
-    <div class="lifecontrols">
-      <p class="minus" @click="incrementLife(-1)">-</p>
-      <div class="lifeCounter">        
-        <p class="lifeIncrement"
-          v-show="showLifeIncrementAmount"
-          >{{lifeIncrementAmount > 0 ? '+'+lifeIncrementAmount:lifeIncrementAmount}}
-        </p>
-        <p class="life">{{life}}</p>
-      </div>
-      
-      <p class="plus" @click="incrementLife(1)">+</p>
     </div>
   </div>`,
-  data() {
+  data() {    
     return {
       life: 20,
       showColorPicker: false,
@@ -42,6 +47,34 @@ app.component("player", {
       showLifeIncrementAmount: false,
       lifeIncrementAmount:0,
     };
+  },
+  created(){
+    this.playerColor = {backgroundColor: this.colors[this.index-1]};
+  },
+  computed:{
+    isHalf() {
+      console.log(this.playerCount);
+      console.log(this.playerCount < 3 || (this.playerCount == 3 && this.index == 3));
+      return this.playerCount < 3 || (this.playerCount == 3 && this.index == 3);
+    },    
+    playerSizing() {
+      return {
+        'width': this.isHalf ? '100vw' : '50vw',
+        'height': this.playerCount > 4 ? '33vh' : '50vh',        
+      };
+    },
+    playerContentSizingAndRotation(){
+      return {
+        'width': this.isHalf ? '100vw' : '50vh',
+        'height': this.isHalf ? '50vh' : '50vw',
+        'transform': this.isHalf && this.index == 1 ? 'rotate(180deg)' :
+          this.isHalf ? '' :
+          this.index == 1 || this.index == 3 ? 'rotate(90deg)translateX(-50vw)' :
+          'rotate(-90deg)translateX(-50vh)',
+        'transform-origin': this.isHalf ? '' : 
+          this.index == 1 || this.index == 3 ? 'bottom left' : 'top left',
+      }
+    }
   },
   methods:{
     setColor(color){
