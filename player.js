@@ -1,13 +1,12 @@
 app.component("player", {
   template:
   /*html*/
-  `<div class="player" v-bind:style="[playerColor, playerSizing]" :class="{half:isHalf, quarter:isQuarter, third:isThird}">
-    <div class="playerContent" v-bind:style="playerContentSizingAndRotation">
+  `<div class="player" :style="[playerColor, playerSizing]" :class="{half:isHalf, quarter:isQuarter, third:isThird}">
+    <div class="playerContent" :style="playerContentSizingAndRotation">
       <div class="controls">
         <div v-show="isHalf" style="flex-grow:1;"></div>
-        <div class="settings" 
-          @click="showColorPicker=!showColorPicker"
-          ><span v-if="showColorPicker" :style="isHalf?{marginRight:'10px'}:{}">X</span>
+        <div class="settings" @click="showColorPicker=!showColorPicker">
+          <span v-if="showColorPicker" :style="isHalf?{marginRight:'10px'}:{}">X</span>
           <span v-else>&bull;&bull;&bull;</span>
         </div>
       </div>
@@ -16,8 +15,8 @@ app.component("player", {
           <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMGgyNHY0aC0yNHoiLz48L3N2Zz4=">
         </div>
         <div class="lifeCounter">        
-          <p class="lifeIncrement"
-            v-show="showLifeIncrementAmount"
+          <p class="lifeIncrement" 
+            v-show="showLifeIncrementAmount" :style="lifeIncrementAmountStyle"
             >{{lifeIncrementAmount > 0 ? '+'+lifeIncrementAmount:lifeIncrementAmount}}
           </p>
           <p class="life">{{life}}</p>
@@ -71,7 +70,8 @@ app.component("player", {
       return this.playerCount < 3 || (this.playerCount == 3 && this.index == 3);
     },
     isQuarter(){
-      return (this.playerCount > 2 && this.playerCount <= 4)
+      return (this.playerCount == 3 && this.index <= 2)
+        ||  (this.playerCount == 4)
         || (this.playerCount == 5 && this.index >= 4);
     },
     isThird(){
@@ -101,7 +101,17 @@ app.component("player", {
           || ((this.index <= 3) && this.playerCount >= 5)? 'bottom left' : 'top left',
         'flex-direction': this.isThird ? 'column-reverse':'column',
       }
-    }
+    },
+    lifeIncrementAmountStyle(){
+      return {
+        'color': this.lifeIncrementAmount > 0 ? 'darkgreen'
+          : this.lifeIncrementAmount < 0 ? 'darkred'
+          : 'black',
+        '-webkit-text-stroke-color': this.lifeIncrementAmount > 0 ? 'darkgreen'
+          : this.lifeIncrementAmount < 0 ? 'darkred'
+          : 'black',
+      }
+    },
   },
   methods:{
     handleResize () {

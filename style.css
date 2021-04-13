@@ -47,6 +47,7 @@ body {
 }
 .third .lifeControls{
 	padding-bottom: 0;
+	padding-top: 50px;
 }
 .controls{
 	display: flex;
@@ -55,6 +56,9 @@ body {
 	margin-top: 10px;
 	margin-right: 20px;
 	margin-left: 20px;
+}
+.third .controls{
+	margin-top: 0;
 }
 .player p {
 	margin:0;
@@ -77,18 +81,27 @@ body {
 }
 .player.quarter .lifeIncrement{
 	font-size:25px;
+	bottom: 15px;
+	right: 30px;
+}
+.player.third .life{
+	font-size:50px;
+}
+.player.third .lifeIncrement{
+	font-size:25px;
+	bottom: 20px;
+	right: 30px;
 }
 .player.quarter .minus, .player.quarter .plus{
 	font-size:50px;
-}
-.player.quarter .lifeIncrement{
-	bottom: 15px;
-	right: 30px;
 }
 .lifeIncrement{
 	position: relative;
 	width: 0;	
 	float: right;
+	-webkit-text-stroke-width: 0px;
+	-webkit-text-stroke-color: black;
+	font-weight: bold;
 }
 .minus, .plus {
 	cursor: pointer;
