@@ -19,10 +19,10 @@ body {
 	overflow: hidden;
 }
 #app {
-	/* display:flex; */
 	height:100%;
-	max-width: 1024;
-	/* flex-wrap: wrap; */
+	max-width: 1024px;
+	margin: auto;
+	background-color: lightgray;
 }
 #players{
 	display:flex;
@@ -44,6 +44,9 @@ body {
 	align-items:center;
 	flex-grow: 1;
 	padding-bottom: 30px;
+}
+.third .lifeControls{
+	padding-bottom: 0;
 }
 .controls{
 	display: flex;
@@ -98,6 +101,7 @@ body {
 }
 .player .minus img, .player .plus img{
 	width: 25%;
+	max-width: 120px;
 	height: auto;
 	margin: auto;
 }
@@ -111,14 +115,11 @@ body {
 }
 .settings {
 	font-size:45px;
-	/* padding-right: 20px; */
 }
 .colorpicker {
 	display: flex;
 	flex-grow: 1;
 	justify-content: space-around;
-	/* padding-left: 10px;
-	padding-right: 30px; */
 }
 .colorCircle {
 	display: inline-block;
@@ -130,8 +131,7 @@ body {
 	border-width: 5px;
 	border-style: solid;
 }
-.globalSettings{
-	/* background-color: magenta; */
+#globalSettings{
 	width: 50px;
 	height: 50px;
 	position: fixed;
@@ -142,9 +142,19 @@ body {
 	align-items: center;
 	z-index: 100;
 }
-.globalSettings img{
+#globalSettings img{
 	width: 100%;
 	height: auto;
+}
+#showGlobalGearCircle{
+	width: 20px;
+  height: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  background-color: lightgray;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
 }
 #playerCountSettings{
 	height: 40%;

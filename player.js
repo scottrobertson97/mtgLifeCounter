@@ -1,7 +1,7 @@
 app.component("player", {
   template:
   /*html*/
-  `<div class="player" v-bind:style="[playerColor, playerSizing]" :class="{half:isHalf, quarter:!isHalf}">
+  `<div class="player" v-bind:style="[playerColor, playerSizing]" :class="{half:isHalf, quarter:isQuarter, third:isThird}">
     <div class="playerContent" v-bind:style="playerContentSizingAndRotation">
       <div class="controls">
         <div v-show="isHalf" style="flex-grow:1;"></div>
@@ -52,37 +52,62 @@ app.component("player", {
       lastIncrementTime:0,
       showLifeIncrementAmount: false,
       lifeIncrementAmount:0,
+      appHeight: document.getElementById('app').offsetHeight,
+      appWidth: document.getElementById('app').offsetWidth,
     };
   },
+  mounted: function () {
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeUnmount: function () {
+    window.removeEventListener('resize', this.handleResize)
+  },
   created(){
-    this.playerColor = {backgroundColor: this.colors[this.index-1]};
+    if(this.colors[this.index-1]) this.playerColor = {backgroundColor: this.colors[this.index-1]};
+    else this.playerColor = {backgroundColor: this.colors[0]};
   },
   computed:{
     isHalf() {
-      console.log(this.playerCount);
-      console.log(this.playerCount < 3 || (this.playerCount == 3 && this.index == 3));
       return this.playerCount < 3 || (this.playerCount == 3 && this.index == 3);
-    },    
+    },
+    isQuarter(){
+      return (this.playerCount > 2 && this.playerCount <= 4)
+        || (this.playerCount == 5 && this.index >= 4);
+    },
+    isThird(){
+      return this.playerCount == 6 || (this.playerCount == 5 && this.index < 4);
+    },
     playerSizing() {
       return {
-        'width': this.isHalf ? '100vw' : '50vw',
-        'height': this.playerCount > 4 ? '33vh' : '50vh',        
+        'width': this.isHalf ? `${this.appWidth}px` : `${this.appWidth/2}px`,
+        'height': this.isThird ? `${this.appHeight/3}px` : `${this.appHeight/2}px`,     
       };
     },
     playerContentSizingAndRotation(){
       return {
-        'width': this.isHalf ? '100vw' : '50vh',
-        'height': this.isHalf ? '50vh' : '50vw',
-        'transform': this.isHalf && this.index == 1 ? 'rotate(180deg)' :
-          this.isHalf ? '' :
-          this.index == 1 || this.index == 3 ? 'rotate(90deg)translateX(-50vw)' :
-          'rotate(-90deg)translateX(-50vh)',
+        'width': this.isHalf ? `${this.appWidth}px` 
+          :this.isQuarter ? `${this.appHeight/2}px`
+          :`${this.appHeight/3}px`,
+        'height': this.isHalf ? `${this.appHeight/2}px`:`${this.appWidth/2}px`,
+        'transform': this.isHalf && this.index == 1 ? 'rotate(180deg)'
+          :this.isHalf ? ''
+          :((this.index == 1 || this.index == 3) && this.playerCount < 5)
+            ||((this.index <= 3) && this.playerCount >= 5) 
+            ? `rotate(90deg)translateX(-${this.appWidth/2}px)`
+          :this.isQuarter ? `rotate(-90deg)translateX(-${this.appHeight/2}px)`
+          : `rotate(-90deg)translateX(-${this.appHeight/3}px)`,
         'transform-origin': this.isHalf ? '' : 
-          this.index == 1 || this.index == 3 ? 'bottom left' : 'top left',
+          ((this.index == 1 || this.index == 3) && this.playerCount < 5)
+          || ((this.index <= 3) && this.playerCount >= 5)? 'bottom left' : 'top left',
+        'flex-direction': this.isThird ? 'column-reverse':'column',
       }
     }
   },
   methods:{
+    handleResize () {
+      this.appHeight = document.getElementById('app').offsetHeight;
+      this.appWidth = document.getElementById('app').offsetWidth;
+    },
     setColor(color){
       console.log(color);
       this.showColorPicker = false;
