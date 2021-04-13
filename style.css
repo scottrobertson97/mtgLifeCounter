@@ -19,6 +19,12 @@ body {
 	overflow: hidden;
 }
 #app {
+	/* display:flex; */
+	height:100%;
+	max-width: 1024;
+	/* flex-wrap: wrap; */
+}
+#players{
 	display:flex;
 	height:100%;
 	flex-wrap: wrap;
@@ -32,7 +38,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.lifecontrols{
+.lifeControls{
 	display:flex;
 	justify-content:space-evenly;
 	align-items:center;
@@ -44,6 +50,8 @@ body {
 	justify-content: space-around;
 	align-items: center;
 	margin-top: 10px;
+	margin-right: 20px;
+	margin-left: 20px;
 }
 .player p {
 	margin:0;
@@ -82,25 +90,35 @@ body {
 .minus, .plus {
 	cursor: pointer;
   flex-grow: 1;
-  height: 100%;
   display: flex;
   align-items: center;
 }
-.minus p, .plus p{
+.player .minus, .player .plus{
+	height: 100%;
+}
+.player .minus img, .player .plus img{
+	width: 25%;
+	height: auto;
+	margin: auto;
+}
+.player .minus p, .player .plus p{
 	margin: 0;
   text-align: center;
   width: 100%;
 }
+.player.half .minus img, .player.half .plus img{
+	width: 50%;
+}
 .settings {
 	font-size:45px;
-	padding-right: 20px;
+	/* padding-right: 20px; */
 }
 .colorpicker {
 	display: flex;
 	flex-grow: 1;
 	justify-content: space-around;
-	padding-left: 10px;
-	padding-right: 30px;
+	/* padding-left: 10px;
+	padding-right: 30px; */
 }
 .colorCircle {
 	display: inline-block;
@@ -113,10 +131,49 @@ body {
 	border-style: solid;
 }
 .globalSettings{
-	position: absolute;
-	background-color: magenta;
+	/* background-color: magenta; */
 	width: 50px;
 	height: 50px;
-	top:50%;
-	right: 50%;
+	position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+	display: flex;
+	align-items: center;
+	z-index: 100;
+}
+.globalSettings img{
+	width: 100%;
+	height: auto;
+}
+#playerCountSettings{
+	height: 40%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+#playerCountSettings .plus, #playerCountSettings .minus{
+	width: 100%;
+}
+#playerCountSettings .plus img, #playerCountSettings .minus img{
+	height: 50%;
+	width: auto;
+	margin:auto;
+}
+#playerCount{
+	flex-grow: 1;
+	display: flex;
+	width: 100%;
+}
+#playerCount div:first-child{
+	height: 100%;
+	margin: auto;
+	display: flex;
+	align-items: center;
+}
+#playerCount img{
+	height: 50%;
+	width: auto;
+	margin-left: 5px;
+	margin-right: 5px;
 }

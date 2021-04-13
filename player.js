@@ -1,30 +1,20 @@
 app.component("player", {
-  props: {
-    playerCount: Number,
-    index: Number
-  },
   template:
   /*html*/
   `<div class="player" v-bind:style="[playerColor, playerSizing]" :class="{half:isHalf, quarter:!isHalf}">
     <div class="playerContent" v-bind:style="playerContentSizingAndRotation">
-      <div class="controls">      
-        <div class="colorpicker" v-show="showColorPicker">
-          <span 
-            class="colorCircle"
-            v-for="color in colors"
-            v-bind:style="{backgroundColor: color}"
-            @click="setColor(color)"
-          ></span>
-        </div>
-        <div v-show="!showColorPicker" style="flex-grow:1;"></div>
+      <div class="controls">
+        <div v-show="isHalf" style="flex-grow:1;"></div>
         <div class="settings" 
           @click="showColorPicker=!showColorPicker"
-          ><span v-if="showColorPicker" style="margin-right:10px;">X</span>
+          ><span v-if="showColorPicker" :style="isHalf?{marginRight:'10px'}:{}">X</span>
           <span v-else>&bull;&bull;&bull;</span>
         </div>
       </div>
-      <div class="lifecontrols">
-        <div class="minus" @click="incrementLife(-1)"><p>-</p></div>
+      <div class="lifeControls" v-show="!showColorPicker">
+        <div class="minus" @click="incrementLife(-1)">
+          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMGgyNHY0aC0yNHoiLz48L3N2Zz4=">
+        </div>
         <div class="lifeCounter">        
           <p class="lifeIncrement"
             v-show="showLifeIncrementAmount"
@@ -32,10 +22,26 @@ app.component("player", {
           </p>
           <p class="life">{{life}}</p>
         </div>        
-        <div class="plus" @click="incrementLife(1)"><p>+</p></div>
+        <div class="plus" @click="incrementLife(1)">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjQgMTBoLTEwdi0xMGgtNHYxMGgtMTB2NGgxMHYxMGg0di0xMGgxMHoiLz48L3N2Zz4=">
+        </div>
+      </div>
+      <div class="settingsControls" v-show="showColorPicker">
+        <div class="colorpicker">
+          <span 
+            class="colorCircle"
+            v-for="color in colors"
+            v-bind:style="{backgroundColor: color}"
+            @click="setColor(color)"
+          ></span>
+        </div>
       </div>
     </div>
   </div>`,
+  props: {
+    playerCount: Number,
+    index: Number
+  },  
   data() {    
     return {
       life: 20,
