@@ -39,7 +39,10 @@ app.component("player", {
   </div>`,
   props: {
     playerCount: Number,
-    index: Number
+    index: Number,
+    defaultLife: Number,
+    reset: Boolean,
+    history: Array,
   },  
   data() {    
     return {
@@ -132,10 +135,22 @@ app.component("player", {
       setTimeout(()=>{
         let now = Date.now();
         if(now - this.lastIncrementTime >= 3000) {
+          this.history.push(`Player ${this.index} changed their life by ${this.lifeIncrementAmount}`);
           this.showLifeIncrementAmount = false;
           this.lifeIncrementAmount = 0; 
         }
       }, 3000);
     },
+  },
+  watch: {
+    reset (val, oldVal) {
+      if (val!==oldVal) {
+        this.life = this.defaultLife;
+        if(this.lifeIncrementAmount > 0)
+          this.history.push(`Player ${this.index} changed their life by ${this.lifeIncrementAmount}.`);
+        this.showLifeIncrementAmount = false;
+        this.lifeIncrementAmount = 0;
+      }
+    }
   },
 });

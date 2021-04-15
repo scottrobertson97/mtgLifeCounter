@@ -145,15 +145,6 @@ body {
 	border-style: solid;
 }
 #globalSettings{
-	width: 50px;
-	height: 50px;
-	position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-	display: flex;
-	align-items: center;
-	z-index: 100;
 }
 #globalSettings img{
 	width: 100%;
@@ -199,4 +190,22 @@ body {
 	width: auto;
 	margin-left: 5px;
 	margin-right: 5px;
+}
+.settingOption{
+	width: 50px;
+	height: 50px;
+	position: fixed;
+  top: 50%;
+  left: 50%;
+	display: flex;
+	align-items: center;
+	z-index: 100;
+	transform: translate(-50%, -50%);
+}
+.settingOption img{
+	width: 100%;
+	height: auto;
+}
+#idk{
+	transform:translate(-50%, -50%)rotate(72deg)translateY(-50px)rotate(-72deg)
 }
