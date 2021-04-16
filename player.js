@@ -6,13 +6,13 @@ app.component("player", {
       <div class="controls">
         <div v-show="isHalf" style="flex-grow:1;"></div>
         <div class="settings" @click="showColorPicker=!showColorPicker">
-          <span v-if="showColorPicker" :style="isHalf?{marginRight:'10px'}:{}">X</span>
-          <span v-else>&bull;&bull;&bull;</span>
+          <span class="pointer" v-if="showColorPicker" :style="isHalf?{marginRight:'10px'}:{}">X</span>
+          <span class="pointer" v-else>&bull;&bull;&bull;</span>
         </div>
       </div>
       <div class="lifeControls" v-show="!showColorPicker">
         <div class="minus" @click="incrementLife(-1)">
-          <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMCAxMGgyNHY0aC0yNHoiLz48L3N2Zz4=">
+          <img :src="IMAGES.MINUS" />
         </div>
         <div class="lifeCounter">        
           <p class="lifeIncrement" 
@@ -22,13 +22,13 @@ app.component("player", {
           <p class="life">{{life}}</p>
         </div>        
         <div class="plus" @click="incrementLife(1)">
-        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMjQgMTBoLTEwdi0xMGgtNHYxMGgtMTB2NGgxMHYxMGg0di0xMGgxMHoiLz48L3N2Zz4=">
+        <img :src="IMAGES.PLUS" />
         </div>
       </div>
       <div class="settingsControls" v-show="showColorPicker">
         <div class="colorpicker">
           <span 
-            class="colorCircle"
+            class="colorCircle pointer"
             v-for="color in colors"
             v-bind:style="{backgroundColor: color}"
             @click="setColor(color)"
@@ -46,6 +46,7 @@ app.component("player", {
   },  
   data() {    
     return {
+      IMAGES:IMAGES,
       life: 20,
       showColorPicker: false,
       colors: ["var(--mtg-white)", "var(--mtg-blue)", "var(--mtg-black)", "var(--mtg-red)", "var(--mtg-green)"],
@@ -135,7 +136,7 @@ app.component("player", {
       setTimeout(()=>{
         let now = Date.now();
         if(now - this.lastIncrementTime >= 3000) {
-          this.history.push(`Player ${this.index} changed their life by ${this.lifeIncrementAmount}`);
+          this.$emit('addHistory',`Player ${this.index} changed their life by ${this.lifeIncrementAmount}`);
           this.showLifeIncrementAmount = false;
           this.lifeIncrementAmount = 0; 
         }
@@ -147,7 +148,7 @@ app.component("player", {
       if (val!==oldVal) {
         this.life = this.defaultLife;
         if(this.lifeIncrementAmount > 0)
-          this.history.push(`Player ${this.index} changed their life by ${this.lifeIncrementAmount}.`);
+          this.$emit('addHistory',`Player ${this.index} changed their life by ${this.lifeIncrementAmount}.`);
         this.showLifeIncrementAmount = false;
         this.lifeIncrementAmount = 0;
       }

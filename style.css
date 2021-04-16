@@ -49,6 +49,9 @@ body {
 	padding-bottom: 0;
 	padding-top: 50px;
 }
+.pointer{
+	cursor: pointer;
+}
 .controls{
 	display: flex;
 	justify-content: space-around;
@@ -104,11 +107,11 @@ body {
 	font-weight: bold;
 }
 .minus, .plus {
-	cursor: pointer;
   flex-grow: 1;
   display: flex;
   align-items: center;
 }
+.minusimg, .plus img{cursor: pointer;}
 .player .minus, .player .plus{
 	height: 100%;
 }
