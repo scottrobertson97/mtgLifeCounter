@@ -1,68 +1,91 @@
 <html>
   <head>
     <title>MTG Life Counter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <link rel="stylesheet" href="style.css?v=6" />
     <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
   </head>
   <body>
     <div id="app">
-      <div id="globalSettings" class="settingOption" >
-        <span id="showGlobalGearCircle" 
+      <div id="globalSettings" class="settingOption">
+        <span
+          id="showGlobalGearCircle"
           class="pointer"
-          v-show="settingState=='global'" 
+          v-show="settingState=='global'"
           @click="showGlobalSettings=!showGlobalSettings"
         ></span>
-        <img v-show="settingState=='global'" 
+        <img
+          v-show="settingState=='global'"
           class="pointer"
-          @click="showGlobalSettings=!showGlobalSettings" 
-          :src="IMAGES.GEAR" />
-        <img v-show="settingState!='global'" 
+          @click="showGlobalSettings=!showGlobalSettings"
+          :src="IMAGES.GEAR"
+        />
+        <img
+          v-show="settingState!='global'"
           class="pointer"
-          @click="closeSetting(settingState);settingState='global';showGlobalSettings=!showGlobalSettings;" 
-          :src="IMAGES.X">
+          @click="closeSetting(settingState);settingState='global';showGlobalSettings=!showGlobalSettings;"
+          :src="IMAGES.X"
+        />
       </div>
       <template v-for="(option, index) in settingOptions">
-      <div v-show="showGlobalSettings && settingState=='global'" class="settingOption" 
-        @click="settingState=option.option;option.click?.();"
-        :style="{transform:'translate(-50%, -50%)rotate('+((360/settingOptions.length)*index)+'deg)translateY(-100px)rotate(-'+((360/settingOptions.length)*index)+'deg)'}">
-        <img class="pointer" :src="option.img">
-      </div>
+        <div
+          v-show="showGlobalSettings && settingState=='global'"
+          class="settingOption"
+          @click="settingState=option.option;option.click?.();"
+          :style="{transform:'translate(-50%, -50%)rotate('+((360/settingOptions.length)*index)+'deg)translateY(-100px)rotate(-'+((360/settingOptions.length)*index)+'deg)'}"
+        >
+          <img class="pointer" :src="option.img" />
+        </div>
       </template>
-      <div id="players" v-show="!showGlobalSettings" :style="showThirds?{flexDirection:'column'}:{}">
-        <player v-for="i in playerCount" 
-          :player-count="playerCount" 
-          :default-life="defaultLife" 
-          :reset="reset" 
-          :index="i" 
+      <div
+        id="players"
+        v-show="!showGlobalSettings"
+        :style="showThirds?{flexDirection:'column'}:{}"
+      >
+        <player
+          v-for="i in playerCount"
+          :player-count="playerCount"
+          :default-life="defaultLife"
+          :reset="reset"
+          :index="i"
           @add-history="addHistory"
         ></player>
       </div>
       <div v-show="showGlobalSettings">
-        <playercount v-show="settingState=='playercount'" 
-          :player-count="playerCount" 
+        <playercount
+          v-show="settingState=='playercount'"
+          :player-count="playerCount"
           @increment-player="incrementPlayer"
         ></playercount>
-        <div v-show="settingState=='history'" >
-          <div style="height: 40%;overflow-y: scroll;padding-left: 15px;">
-            <p v-for="(h, index) in history">
-              {{index}}: {{h}}
-            </p>
+        <div v-show="settingState=='history'">
+          <div style="height: 40%; overflow-y: scroll; padding-left: 15px">
+            <p v-for="(h, index) in history">{{index}}: {{h}}</p>
           </div>
-          <div style="width: 100%;height: 20%;"></div>
-          <h1 style="width: 100%;height: 40%;text-align: center;" @click="history=[]" class="pointer">Clear History</h1>
+          <div style="width: 100%; height: 20%"></div>
+          <h1
+            style="width: 100%; height: 40%; text-align: center"
+            @click="history=[]"
+            class="pointer"
+          >
+            Clear History
+          </h1>
         </div>
-        <div v-show="settingState=='startinglife'" style="padding-top: 100px;">
-          <div style="text-align: center;">
-            <label style="font-size: 50px;">Starting Life: </label>
-            <input type="number" min="1" value="20"
-            style="font-size: 50px;width: 100px;"
-            @change="changeStartingLife"/>
+        <div v-show="settingState=='startinglife'" style="padding-top: 100px">
+          <div style="text-align: center">
+            <label style="font-size: 50px">Starting Life: </label>
+            <input
+              type="number"
+              min="1"
+              value="20"
+              style="font-size: 50px; width: 100px"
+              @change="changeStartingLife"
+            />
           </div>
         </div>
-        <coin v-show="settingState=='coin'"
-          @add-history="addHistory"
-        ></coin>
+        <coin v-show="settingState=='coin'" @add-history="addHistory"></coin>
       </div>
     </div>
     <script src="images.js?v=6"></script>
@@ -71,7 +94,7 @@
     <script src="playercount.js?v=6"></script>
     <script src="coin.js?v=6"></script>
     <script>
-      const mountedApp = app.mount("#app");     
+      const mountedApp = app.mount("#app");
     </script>
   </body>
 </html>

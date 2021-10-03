@@ -1,7 +1,7 @@
 app.component("playercount", {
-	template:
-  /*html*/
-	`<div id="playerCountSettings">
+  template:
+    /*html*/
+    `<div id="playerCountSettings">
     <div class="plus" @click="$emit('increment-player', +1)">
       <img :src="IMAGES.PLUS">
     </div>          
@@ -14,14 +14,14 @@ app.component("playercount", {
       <img :src="IMAGES.MINUS">
     </div>
   </div>`,
-	props:{
-		playerCount: Number
-	},
-	data(){
+  props: {
+    playerCount: Number,
+  },
+  data() {
     return {
       IMAGES: IMAGES,
     };
   },
-	computed:{},
-	methods:{},
+  computed: {},
+  methods: {},
 });
