@@ -33,7 +33,6 @@ app.component("coin", {
       if (!this.animationId) {
         this.showCoin = false;
         this.animationId = setInterval(this.animateCoin, 10);
-        console.log(this.animationId);
         this.coin = Math.floor(Math.random() * 2) == 0 ? "H" : "T";
       }
     },

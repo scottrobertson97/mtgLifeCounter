@@ -85,7 +85,9 @@
             />
           </div>
         </div>
-        <coin v-show="settingState=='coin'" @add-history="addHistory"></coin>
+        <div v-show="settingState=='coin'">
+          <coin @add-history="addHistory"></coin>
+        </div>
       </div>
     </div>
     <script src="images.js?v=6"></script>
